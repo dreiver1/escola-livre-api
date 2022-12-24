@@ -22,8 +22,8 @@ const home = (req, res) => {
 } 
 // app.use("/", home);
 app.use("/", incio);
-app.use("/administradores", administradores);
-app.use("/professores", professores);
+app.use("/admin", administradores);
+app.use("/prof", professores);
 app.use("/alunos", alunos);
 
 

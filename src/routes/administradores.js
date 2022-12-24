@@ -1,5 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const controlers = require('../controllers/administradoresControlers');
-router.get("/", controlers.helloWolrd);
+const administradoresControlers = require('../controllers/administradoresControlers')
+
+router.get("/", administradoresControlers.GetAllAdmin);
+router.get("/:id", administradoresControlers.GetAdminById);
+router.post("/", administradoresControlers.CreateAdmin);
+router.put("/:id", administradoresControlers.AlteraAdmin);
+router.delete("/:id", administradoresControlers.DelteAdm);
+
+
+
 module.exports = router;
