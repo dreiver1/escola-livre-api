@@ -22,7 +22,7 @@ model Frequencia {
   outubro_idoutro                                    Int
   novembro_idnovembro                                Int
   dezembro_iddezembro                                Int
-  alunos_idAluno                                     Int
+  alunos_idAluno                                     String
   abril                                              abril     @relation(fields: [abril_idabril], references: [idabril], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_abril1")
   agosto                                             agosto    @relation(fields: [agosto_idagosto], references: [idagosto], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_agosto1")
   alunos                                             alunos    @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_alunos1")
@@ -98,6 +98,7 @@ model administradores {
   email          String        @db.VarChar(45)
   senha          String        @db.VarChar(45)
   professores    professores[]
+
   @@unique(fields: [email], name: "usuario")
 }
 
@@ -137,18 +138,18 @@ model agosto {
 }
 
 model alunos {
-  idAluno                   Int              @id @default(autoincrement())
+  idAluno                   String           @id @default(cuid())
   nome                      String           @db.VarChar(45)
   dataNascimento            String           @db.VarChar(45)
   celular                   String           @db.VarChar(45)
   email                     String           @db.VarChar(45)
   senha                     String           @db.VarChar(45)
   cpf                       String?          @db.VarChar(45)
-  professores_idprofessores Int
+  professores_idprofessores String?
   Frequencia                Frequencia[]
-  professores               professores      @relation(fields: [professores_idprofessores], references: [idprofessores], onDelete: NoAction, onUpdate: NoAction, map: "fk_alunos_professores")
   notas                     notas[]
   parecerDoAluno            parecerDoAluno[]
+  professores               professores?     @relation(fields: [professores_idprofessores], references: [idprofessores], onDelete: NoAction, onUpdate: NoAction, map: "fk_alunos_professores")
 
   @@index([professores_idprofessores], map: "fk_alunos_professores_idx")
 }
@@ -571,7 +572,7 @@ model matematica {
 
 model notas {
   idnotas                        Int                   @default(autoincrement())
-  alunos_idAluno                 Int
+  alunos_idAluno                 String
   linguaPortuguesa_id_table      Int                   @map("linguaPortuguesa_id-table")
   matematica_id_table            Int                   @map("matematica_id-table")
   historia_id_table              Int                   @map("historia_id-table")
@@ -680,7 +681,7 @@ model outubro {
 
 model parecerDoAluno {
   idparecerDoAluno Int    @id
-  alunos_idAluno   Int
+  alunos_idAluno   String
   alunos           alunos @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_parecerDoAluno_alunos1")
 
   @@index([alunos_idAluno], map: "fk_parecerDoAluno_alunos1_idx")
@@ -706,16 +707,16 @@ model producaoTextual {
 }
 
 model professores {
-  idprofessores         Int             @id
-  nome                  String?         @db.VarChar(45)
-  dataNascimento        String?         @db.VarChar(45)
-  celular               String?         @db.VarChar(45)
-  cpf                   String?         @db.VarChar(45)
-  email                 String?         @db.VarChar(45)
-  senha                 String?         @db.VarChar(45)
-  administradores_idAdm Int
+  idprofessores         String           @id @default(cuid())
+  nome                  String?          @db.VarChar(45)
+  dataNascimento        String?          @db.VarChar(45)
+  celular               String?          @db.VarChar(45)
+  cpf                   String?          @db.VarChar(45)
+  email                 String?          @db.VarChar(45)
+  senha                 String?          @db.VarChar(45)
+  administradores_idAdm Int?
   alunos                alunos[]
-  administradores       administradores @relation(fields: [administradores_idAdm], references: [idAdm], onDelete: NoAction, onUpdate: NoAction, map: "fk_professores_administradores1")
+  administradores       administradores? @relation(fields: [administradores_idAdm], references: [idAdm], onDelete: NoAction, onUpdate: NoAction, map: "fk_professores_administradores1")
 
   @@index([administradores_idAdm], map: "fk_professores_administradores1_idx")
 }
