@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 exports.createAluno = async (req, res) => {
     try {
-        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores } = req.body;
+        const { nome, dataNascimento, email, cpf, celular, senha, Alunoessores_idprofessores } = req.body;
         const aluno = await prisma.alunos.create({
             data: {
                 nome,
@@ -21,7 +21,7 @@ exports.createAluno = async (req, res) => {
     };
 };
 
-exports.GetAllProf = async (req, res) => {
+exports.GetAllAluno = async (req, res) => {
     try {
         const alunos = await prisma.alunos.findMany();
         return res.json(alunos);
@@ -30,7 +30,7 @@ exports.GetAllProf = async (req, res) => {
     }
 }
 
-exports.GetProfById = async (req, res) =>{
+exports.GetAlunoById = async (req, res) =>{
     try {
         const { id } = req.params;
         const aluno = await prisma.alunos.findUnique({where: { idAluno: id } })
@@ -43,7 +43,7 @@ exports.GetProfById = async (req, res) =>{
     }
 }
 
-exports.AlteraProf = async (req, res) =>{
+exports.AlteraAluno = async (req, res) =>{
     try {
         const { id } = req.params;
         const {nome, email, cpf, dataNascimento, celular} = req.body;
@@ -63,7 +63,7 @@ exports.AlteraProf = async (req, res) =>{
     }
 }
 
-exports.DelteProf = async (req, res) =>{
+exports.DelteAluno = async (req, res) =>{
     try {
         const {id} = req.params;
         let aluno = await prisma.alunos.findUnique({
