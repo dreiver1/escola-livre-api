@@ -7,86 +7,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Frequencia {
-  idFrequencia                                       Int       @id @default(autoincrement())
-  janeiro_idjaneiro                                  Int
-  fevereiro_idfevereiro                              Int
-  marco_idmarco                                      Int
-  abril_idabril                                      Int
-  maio_idmaio                                        Int
-  junho_idjunho                                      Int
-  julho_idjulho                                      Int
-  agosto_idagosto                                    Int
-  setembro_idsetembro                                Int
-  setembro_idsetembro1                               Int
-  outubro_idoutro                                    Int
-  novembro_idnovembro                                Int
-  dezembro_iddezembro                                Int
-  alunos_idAluno                                     String
-  abril                                              abril     @relation(fields: [abril_idabril], references: [idabril], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_abril1")
-  agosto                                             agosto    @relation(fields: [agosto_idagosto], references: [idagosto], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_agosto1")
-  alunos                                             alunos    @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_alunos1")
-  dezembro                                           dezembro  @relation(fields: [dezembro_iddezembro], references: [iddezembro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_dezembro1")
-  fevereiro                                          fevereiro @relation(fields: [fevereiro_idfevereiro], references: [idfevereiro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_fevereiro1")
-  janeiro                                            janeiro   @relation(fields: [janeiro_idjaneiro], references: [idjaneiro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_janeiro1")
-  julho                                              julho     @relation(fields: [julho_idjulho], references: [idjulho], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_julho1")
-  junho                                              junho     @relation(fields: [junho_idjunho], references: [idjunho], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_junho1")
-  maio                                               maio      @relation(fields: [maio_idmaio], references: [idmaio], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_maio1")
-  marco                                              marco     @relation(fields: [marco_idmarco], references: [idmarco], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_marco1")
-  novembro                                           novembro  @relation(fields: [novembro_idnovembro], references: [idnovembro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_novembro1")
-  outubro                                            outubro   @relation(fields: [outubro_idoutro], references: [idoutro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_outubro1")
-  setembro_Frequencia_setembro_idsetembroTosetembro  setembro  @relation("Frequencia_setembro_idsetembroTosetembro", fields: [setembro_idsetembro], references: [idsetembro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_setembro1")
-  setembro_Frequencia_setembro_idsetembro1Tosetembro setembro  @relation("Frequencia_setembro_idsetembro1Tosetembro", fields: [setembro_idsetembro1], references: [idsetembro], onDelete: NoAction, onUpdate: NoAction, map: "fk_Frequencia_setembro2")
-
-  @@index([abril_idabril], map: "fk_Frequencia_abril1_idx")
-  @@index([agosto_idagosto], map: "fk_Frequencia_agosto1_idx")
-  @@index([alunos_idAluno], map: "fk_Frequencia_alunos1_idx")
-  @@index([dezembro_iddezembro], map: "fk_Frequencia_dezembro1_idx")
-  @@index([fevereiro_idfevereiro], map: "fk_Frequencia_fevereiro1_idx")
-  @@index([janeiro_idjaneiro], map: "fk_Frequencia_janeiro1_idx")
-  @@index([julho_idjulho], map: "fk_Frequencia_julho1_idx")
-  @@index([junho_idjunho], map: "fk_Frequencia_junho1_idx")
-  @@index([maio_idmaio], map: "fk_Frequencia_maio1_idx")
-  @@index([marco_idmarco], map: "fk_Frequencia_marco1_idx")
-  @@index([novembro_idnovembro], map: "fk_Frequencia_novembro1_idx")
-  @@index([outubro_idoutro], map: "fk_Frequencia_outubro1_idx")
-  @@index([setembro_idsetembro], map: "fk_Frequencia_setembro1_idx")
-  @@index([setembro_idsetembro1], map: "fk_Frequencia_setembro2_idx")
+model Turma {
+  id                       String       @id @default(cuid())
+  nome                     String
+  alunos                   alunos[]
+  notas                    notas[]
+  frequencia               Frequencia[]
+  professores              professores? @relation(fields: [professoresIdprofessores], references: [idprofessores])
+  professoresIdprofessores String?
 }
 
-model abril {
-  idabril    Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
+model Frequencia {
+  id            String  @id @default(cuid())
+  mes           Mes[]
+  aluno         alunos? @relation(fields: [alunosIdAluno], references: [idAluno])
+  turma         Turma?  @relation(fields: [turmaId], references: [id])
+  alunosIdAluno String?
+  turmaId       String?
+}
+
+model alunos {
+  idAluno                   String           @id @default(cuid())
+  nome                      String           @db.VarChar(45)
+  dataNascimento            String           @db.VarChar(45)
+  celular                   String           @db.VarChar(45)
+  email                     String           @db.VarChar(45)
+  senha                     String           @db.VarChar(45)
+  cpf                       String?          @db.VarChar(45)
+  professores_idprofessores String?
+  turma_id                  String?
+  notas                     notas[]
+  parecerDoAluno            parecerDoAluno[]
+  professores               professores?     @relation(fields: [professores_idprofessores], references: [idprofessores], onDelete: NoAction, onUpdate: NoAction, map: "fk_alunos_professores")
+
   Frequencia Frequencia[]
+  Turma      Turma?       @relation(fields: [turmaId], references: [id])
+  turmaId    String?
+
+  @@index([professores_idprofessores], map: "fk_alunos_professores_idx")
+}
+
+model Mes {
+  id   Int    @id @default(autoincrement())
+  nome String
+  a01  String @default("n") @map("01")
+  a02  String @default("n") @map("02")
+  a03  String @default("n") @map("03")
+  a04  String @default("n") @map("04")
+  a05  String @default("n") @map("05")
+  a06  String @default("n") @map("06")
+  a07  String @default("n") @map("07")
+  a08  String @default("n") @map("08")
+  a09  String @default("n") @map("09")
+  a10  String @default("n") @map("10")
+  a11  String @default("n") @map("11")
+  a12  String @default("n") @map("12")
+  a13  String @default("n") @map("13")
+  a14  String @default("n") @map("14")
+  a15  String @default("n") @map("15")
+  a16  String @default("n") @map("16")
+  a17  String @default("n") @map("17")
+  a19  String @default("n") @map("19")
+  a20  String @default("n") @map("20")
+  a21  String @default("n") @map("21")
+  a22  String @default("n") @map("22")
+  a23  String @default("n") @map("23")
+  a24  String @default("n") @map("24")
+  a25  String @default("n") @map("25")
+  a26  String @default("n") @map("26")
+  a27  String @default("n") @map("27")
+  a28  String @default("n") @map("28")
+  a29  String @default("n") @map("29")
+  a30  String @default("n") @map("30")
+  a31  String @default("n") @map("31")
+
+  Frequencia   Frequencia? @relation(fields: [frequenciaId], references: [id])
+  frequenciaId String?
 }
 
 model administradores {
@@ -102,581 +98,17 @@ model administradores {
   @@unique(fields: [email], name: "usuario")
 }
 
-model agosto {
-  idagosto   Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model alunos {
-  idAluno                   String           @id @default(cuid())
-  nome                      String           @db.VarChar(45)
-  dataNascimento            String           @db.VarChar(45)
-  celular                   String           @db.VarChar(45)
-  email                     String           @db.VarChar(45)
-  senha                     String           @db.VarChar(45)
-  cpf                       String?          @db.VarChar(45)
-  professores_idprofessores String?
-  Frequencia                Frequencia[]
-  notas                     notas[]
-  parecerDoAluno            parecerDoAluno[]
-  professores               professores?     @relation(fields: [professores_idprofessores], references: [idprofessores], onDelete: NoAction, onUpdate: NoAction, map: "fk_alunos_professores")
-
-  @@index([professores_idprofessores], map: "fk_alunos_professores_idx")
-}
-
-model artes {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model ciencias {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model conteudosTransversais {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model dezembro {
-  iddezembro Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model educacaoFisica {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model fevereiro {
-  idfevereiro Int          @id @default(autoincrement())
-  a01         Int?         @map("01")
-  a02         Int?         @map("02")
-  a03         Int?         @map("03")
-  a04         Int?         @map("04")
-  a05         Int?         @map("05")
-  a06         Int?         @map("06")
-  a07         Int?         @map("07")
-  a08         Int?         @map("08")
-  a09         Int?         @map("09")
-  a10         Int?         @map("10")
-  a11         Int?         @map("11")
-  a12         Int?         @map("12")
-  a13         Int?         @map("13")
-  a14         Int?         @map("14")
-  a15         Int?         @map("15")
-  a16         Int?         @map("16")
-  a17         Int?         @map("17")
-  a19         Int?         @map("19")
-  a20         Int?         @map("20")
-  a21         Int?         @map("21")
-  a22         Int?         @map("22")
-  a23         Int?         @map("23")
-  a24         Int?         @map("24")
-  a25         Int?         @map("25")
-  a26         Int?         @map("26")
-  a27         Int?         @map("27")
-  a28         Int?         @map("28")
-  a29         Int?         @map("29")
-  a30         Int?         @map("30")
-  a31         Int?         @map("31")
-  Frequencia  Frequencia[]
-}
-
-model geografia {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model historia {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model ingles {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model janeiro {
-  idjaneiro  Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model julho {
-  idjulho    Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model junho {
-  idjunho    Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model linguaPortuguesa {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
-model maio {
-  idmaio     Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model marco {
-  idmarco    Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model matematica {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
-}
-
 model notas {
-  idnotas                        Int                   @default(autoincrement())
-  alunos_idAluno                 String
-  linguaPortuguesa_id_table      Int                   @map("linguaPortuguesa_id-table")
-  matematica_id_table            Int                   @map("matematica_id-table")
-  historia_id_table              Int                   @map("historia_id-table")
-  geografia_id_table             Int                   @map("geografia_id-table")
-  artes_id_table                 Int                   @map("artes_id-table")
-  conteudosTransversais_id_table Int                   @map("conteudosTransversais_id-table")
-  ciencias_id_table              Int                   @map("ciencias_id-table")
-  educacaoFisica_id_table        Int                   @map("educacaoFisica_id-table")
-  ingles_id_table                Int                   @map("ingles_id-table")
-  producaoTextual_id_table       Int                   @map("producaoTextual_id-table")
-  alunos                         alunos                @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_alunos1")
-  artes                          artes                 @relation(fields: [artes_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_artes1")
-  ciencias                       ciencias              @relation(fields: [ciencias_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_ciencias1")
-  conteudosTransversais          conteudosTransversais @relation(fields: [conteudosTransversais_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_conteudosTransversais1")
-  educacaoFisica                 educacaoFisica        @relation(fields: [educacaoFisica_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_educacaoFisica1")
-  geografia                      geografia             @relation(fields: [geografia_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_geografia1")
-  historia                       historia              @relation(fields: [historia_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_historia1")
-  ingles                         ingles                @relation(fields: [ingles_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_ingles1")
-  linguaPortuguesa               linguaPortuguesa      @relation(fields: [linguaPortuguesa_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_linguaPortuguesa1")
-  matematica                     matematica            @relation(fields: [matematica_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_matematica1")
-  producaoTextual                producaoTextual       @relation(fields: [producaoTextual_id_table], references: [id_table], onDelete: NoAction, onUpdate: NoAction, map: "fk_notas_producaoTextual1")
+  idnotas Int    @id @default(autoincrement())
+  nota01  Float?
+  nota02  Float?
+  nota03  Float?
+  nota04  Float?
 
-  @@id([idnotas, matematica_id_table, historia_id_table])
-  @@index([alunos_idAluno], map: "fk_notas_alunos1_idx")
-  @@index([artes_id_table], map: "fk_notas_artes1_idx")
-  @@index([ciencias_id_table], map: "fk_notas_ciencias1_idx")
-  @@index([conteudosTransversais_id_table], map: "fk_notas_conteudosTransversais1_idx")
-  @@index([educacaoFisica_id_table], map: "fk_notas_educacaoFisica1_idx")
-  @@index([geografia_id_table], map: "fk_notas_geografia1_idx")
-  @@index([historia_id_table], map: "fk_notas_historia1_idx")
-  @@index([ingles_id_table], map: "fk_notas_ingles1_idx")
-  @@index([linguaPortuguesa_id_table], map: "fk_notas_linguaPortuguesa1_idx")
-  @@index([matematica_id_table], map: "fk_notas_matematica1_idx")
-  @@index([producaoTextual_id_table], map: "fk_notas_producaoTextual1_idx")
-}
-
-model novembro {
-  idnovembro Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
-}
-
-model outubro {
-  idoutro    Int          @id @default(autoincrement())
-  a01        Int?         @map("01")
-  a02        Int?         @map("02")
-  a03        Int?         @map("03")
-  a04        Int?         @map("04")
-  a05        Int?         @map("05")
-  a06        Int?         @map("06")
-  a07        Int?         @map("07")
-  a08        Int?         @map("08")
-  a09        Int?         @map("09")
-  a10        Int?         @map("10")
-  a11        Int?         @map("11")
-  a12        Int?         @map("12")
-  a13        Int?         @map("13")
-  a14        Int?         @map("14")
-  a15        Int?         @map("15")
-  a16        Int?         @map("16")
-  a17        Int?         @map("17")
-  a19        Int?         @map("19")
-  a20        Int?         @map("20")
-  a21        Int?         @map("21")
-  a22        Int?         @map("22")
-  a23        Int?         @map("23")
-  a24        Int?         @map("24")
-  a25        Int?         @map("25")
-  a26        Int?         @map("26")
-  a27        Int?         @map("27")
-  a28        Int?         @map("28")
-  a29        Int?         @map("29")
-  a30        Int?         @map("30")
-  a31        Int?         @map("31")
-  Frequencia Frequencia[]
+  Turma         Turma?  @relation(fields: [turmaId], references: [id])
+  turmaId       String?
+  alunos        alunos? @relation(fields: [alunosIdAluno], references: [idAluno])
+  alunosIdAluno String?
 }
 
 model parecerDoAluno {
@@ -685,25 +117,6 @@ model parecerDoAluno {
   alunos           alunos @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_parecerDoAluno_alunos1")
 
   @@index([alunos_idAluno], map: "fk_parecerDoAluno_alunos1_idx")
-}
-
-model producaoTextual {
-  id_table   Int     @id @default(autoincrement()) @map("id-table")
-  av0101     Float?  @db.Float
-  av0201     Float?  @db.Float
-  av0301     Float?  @db.Float
-  av0102     Float?  @db.Float
-  av0202     Float?  @db.Float
-  av0302     Float?  @db.Float
-  av0103     Float?  @db.Float
-  av0203     Float?  @db.Float
-  av0303     Float?  @db.Float
-  av0104     Float?  @db.Float
-  av0204     Float?  @db.Float
-  av0304     Float?  @db.Float
-  recFinal   Float?  @db.Float
-  mediaFinal Float?  @db.Float
-  notas      notas[]
 }
 
 model professores {
@@ -717,42 +130,7 @@ model professores {
   administradores_idAdm Int?
   alunos                alunos[]
   administradores       administradores? @relation(fields: [administradores_idAdm], references: [idAdm], onDelete: NoAction, onUpdate: NoAction, map: "fk_professores_administradores1")
+  turmas                Turma[]
 
   @@index([administradores_idAdm], map: "fk_professores_administradores1_idx")
-}
-
-model setembro {
-  idsetembro                                           Int          @id @default(autoincrement())
-  a01                                                  Int?         @map("01")
-  a02                                                  Int?         @map("02")
-  a03                                                  Int?         @map("03")
-  a04                                                  Int?         @map("04")
-  a05                                                  Int?         @map("05")
-  a06                                                  Int?         @map("06")
-  a07                                                  Int?         @map("07")
-  a08                                                  Int?         @map("08")
-  a09                                                  Int?         @map("09")
-  a10                                                  Int?         @map("10")
-  a11                                                  Int?         @map("11")
-  a12                                                  Int?         @map("12")
-  a13                                                  Int?         @map("13")
-  a14                                                  Int?         @map("14")
-  a15                                                  Int?         @map("15")
-  a16                                                  Int?         @map("16")
-  a17                                                  Int?         @map("17")
-  a19                                                  Int?         @map("19")
-  a20                                                  Int?         @map("20")
-  a21                                                  Int?         @map("21")
-  a22                                                  Int?         @map("22")
-  a23                                                  Int?         @map("23")
-  a24                                                  Int?         @map("24")
-  a25                                                  Int?         @map("25")
-  a26                                                  Int?         @map("26")
-  a27                                                  Int?         @map("27")
-  a28                                                  Int?         @map("28")
-  a29                                                  Int?         @map("29")
-  a30                                                  Int?         @map("30")
-  a31                                                  Int?         @map("31")
-  Frequencia_Frequencia_setembro_idsetembroTosetembro  Frequencia[] @relation("Frequencia_setembro_idsetembroTosetembro")
-  Frequencia_Frequencia_setembro_idsetembro1Tosetembro Frequencia[] @relation("Frequencia_setembro_idsetembro1Tosetembro")
 }

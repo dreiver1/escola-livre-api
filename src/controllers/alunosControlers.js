@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 exports.createAluno = async (req, res) => {
     try {
-        const { nome, dataNascimento, email, cpf, celular, senha, Alunoessores_idprofessores } = req.body;
+        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores } = req.body;
         const aluno = await prisma.alunos.create({
             data: {
                 nome,
@@ -53,7 +53,7 @@ exports.AlteraAluno = async (req, res) =>{
         }
         aluno = await prisma.alunos.update({
             where: { idAluno: id },
-            data: { nome, email, celular, cpf, dataNascimento },
+            data: { nome, email, celular, cpf, dataNascimento},
         });
 
         return(res.json(aluno));
