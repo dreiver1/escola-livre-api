@@ -80,3 +80,16 @@ exports.DelteAluno = async (req, res) =>{
         return res.json("ocorreu um erro: "+ error);
     }
 }
+
+exports.getAlunosByTurma = async (req, res) => {
+    try {
+        const {id} = req.params;
+        let alunos = await prisma.alunos.findMany({where: {turmaId: Number(id)}});
+        if (!alunos){
+            return res.json({ error: "Não possivel encotrar esse usuario" });
+        }
+        return res.json(alunos);
+    } catch (error) {
+        return console.log('ocorreu um erro: ' + error);
+    }
+}
