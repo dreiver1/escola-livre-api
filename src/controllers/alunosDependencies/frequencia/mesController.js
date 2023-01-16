@@ -21,6 +21,17 @@ exports.getMesById = async (req, res) => {
     }
 }
 
+exports.getMesByFrequenciaId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const mes = await prisma.mes.findMany({ where: {frequenciaId: id} });
+        if (!mes) { return res.status(404).json("mes não cadastrado") }
+        return res.status(200).json(mes);
+    } catch (error) {
+        return res.status(500).json("ocorreu um erro: " + error);
+    }
+}
+
 exports.createMes = async (req, res) => {
     try {
         const { nome, frequenciaId } = req.body;

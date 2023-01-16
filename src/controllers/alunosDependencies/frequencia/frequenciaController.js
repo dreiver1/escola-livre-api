@@ -22,6 +22,18 @@ exports.getAllFrequencia = async (req, res)=>{
     }
 }
 
+exports.getAllFrequenciaByturmaId = async (req, res)=>{
+    try {
+        const { id } = req.params;
+        const frequencia = await prisma.frequencia.findMany({
+            where: { turmaId: id }
+        });
+        return res.status(200).json(frequencia);
+    } catch (error) {
+        return res.status(500).json("ocorreu um erro:" + error);
+    }
+}
+
 exports.getFrequenciaById = async (req, res) =>{
     try {
         const { id } = req.params;

@@ -6,6 +6,7 @@ const controllerMes = require("../../controllers/alunosDependencies/frequencia/m
 
 router.get("/", controllerFrequencia.getAllFrequencia);
 router.get("/:id", controllerFrequencia.getFrequenciaById);
+router.get("/turma/:id", controllerFrequencia.getAllFrequenciaByturmaId);
 router.post("/", controllerFrequencia.createFrequencia);
 router.put("/:id", controllerFrequencia.putFrequencia);
 router.delete("/:id", controllerFrequencia.deleteFrequencia);
