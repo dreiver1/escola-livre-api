@@ -8,25 +8,35 @@ datasource db {
 }
 
 model Turma {
-  id                       String       @id @default(cuid())
+  id                       String           @id @default(cuid())
   nome                     String
-  alunos                   alunos[]
-  notas                    notas[]
+  alunos                   AlunosEmTurmas[]
   frequencia               Frequencia[]
-  professores              professores? @relation(fields: [professoresIdprofessores], references: [idprofessores])
+  professores              professores?     @relation(fields: [professoresIdprofessores], references: [idprofessores])
   professoresIdprofessores String?
+}
+
+model AlunosEmTurmas {
+  aluno      Aluno    @relation(fields: [alunosId], references: [idAluno])
+  alunosId   String
+  turma      Turma    @relation(fields: [turmaId], references: [id])
+  turmaId    String
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([alunosId, turmaId])
 }
 
 model Frequencia {
   id            String  @id @default(cuid())
   mes           Mes[]
-  aluno         alunos? @relation(fields: [alunosIdAluno], references: [idAluno])
+  aluno         Aluno?  @relation(fields: [alunosIdAluno], references: [idAluno])
   turma         Turma?  @relation(fields: [turmaId], references: [id])
   alunosIdAluno String?
   turmaId       String?
 }
 
-model alunos {
+model Aluno {
   idAluno                   String           @id @default(cuid())
   nome                      String           @db.VarChar(45)
   dataNascimento            String           @db.VarChar(45)
@@ -35,51 +45,49 @@ model alunos {
   senha                     String           @db.VarChar(45)
   cpf                       String?          @db.VarChar(45)
   professores_idprofessores String?
-  turma_id                  String?
+  turma                     AlunosEmTurmas[]
   notas                     notas[]
   parecerDoAluno            parecerDoAluno[]
-  professores               professores?     @relation(fields: [professores_idprofessores], references: [idprofessores], onDelete: NoAction, onUpdate: NoAction, map: "fk_alunos_professores")
 
   Frequencia Frequencia[]
-  Turma      Turma?       @relation(fields: [turmaId], references: [id])
-  turmaId    String?
 
   @@index([professores_idprofessores], map: "fk_alunos_professores_idx")
 }
 
 model Mes {
-  id   Int    @id @default(autoincrement())
+  id   Int     @id @default(autoincrement())
   nome String
-  a01  String @default("n") @map("01")
-  a02  String @default("n") @map("02")
-  a03  String @default("n") @map("03")
-  a04  String @default("n") @map("04")
-  a05  String @default("n") @map("05")
-  a06  String @default("n") @map("06")
-  a07  String @default("n") @map("07")
-  a08  String @default("n") @map("08")
-  a09  String @default("n") @map("09")
-  a10  String @default("n") @map("10")
-  a11  String @default("n") @map("11")
-  a12  String @default("n") @map("12")
-  a13  String @default("n") @map("13")
-  a14  String @default("n") @map("14")
-  a15  String @default("n") @map("15")
-  a16  String @default("n") @map("16")
-  a17  String @default("n") @map("17")
-  a19  String @default("n") @map("19")
-  a20  String @default("n") @map("20")
-  a21  String @default("n") @map("21")
-  a22  String @default("n") @map("22")
-  a23  String @default("n") @map("23")
-  a24  String @default("n") @map("24")
-  a25  String @default("n") @map("25")
-  a26  String @default("n") @map("26")
-  a27  String @default("n") @map("27")
-  a28  String @default("n") @map("28")
-  a29  String @default("n") @map("29")
-  a30  String @default("n") @map("30")
-  a31  String @default("n") @map("31")
+  a01  Boolean @default(false)
+  a02  Boolean @default(false)
+  a03  Boolean @default(false)
+  a04  Boolean @default(false)
+  a05  Boolean @default(false)
+  a06  Boolean @default(false)
+  a07  Boolean @default(false)
+  a08  Boolean @default(false)
+  a09  Boolean @default(false)
+  a10  Boolean @default(false)
+  a11  Boolean @default(false)
+  a12  Boolean @default(false)
+  a13  Boolean @default(false)
+  a14  Boolean @default(false)
+  a15  Boolean @default(false)
+  a16  Boolean @default(false)
+  a17  Boolean @default(false)
+  a18  Boolean @default(false)
+  a19  Boolean @default(false)
+  a20  Boolean @default(false)
+  a21  Boolean @default(false)
+  a22  Boolean @default(false)
+  a23  Boolean @default(false)
+  a24  Boolean @default(false)
+  a25  Boolean @default(false)
+  a26  Boolean @default(false)
+  a27  Boolean @default(false)
+  a28  Boolean @default(false)
+  a29  Boolean @default(false)
+  a30  Boolean @default(false)
+  a31  Boolean @default(false)
 
   Frequencia   Frequencia? @relation(fields: [frequenciaId], references: [id])
   frequenciaId String?
@@ -105,16 +113,14 @@ model notas {
   nota03  Float?
   nota04  Float?
 
-  Turma         Turma?  @relation(fields: [turmaId], references: [id])
-  turmaId       String?
-  alunos        alunos? @relation(fields: [alunosIdAluno], references: [idAluno])
+  alunos        Aluno?  @relation(fields: [alunosIdAluno], references: [idAluno])
   alunosIdAluno String?
 }
 
 model parecerDoAluno {
   idparecerDoAluno Int    @id
   alunos_idAluno   String
-  alunos           alunos @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_parecerDoAluno_alunos1")
+  alunos           Aluno  @relation(fields: [alunos_idAluno], references: [idAluno], onDelete: NoAction, onUpdate: NoAction, map: "fk_parecerDoAluno_alunos1")
 
   @@index([alunos_idAluno], map: "fk_parecerDoAluno_alunos1_idx")
 }
@@ -128,7 +134,6 @@ model professores {
   email                 String?          @db.VarChar(45)
   senha                 String?          @db.VarChar(45)
   administradores_idAdm Int?
-  alunos                alunos[]
   administradores       administradores? @relation(fields: [administradores_idAdm], references: [idAdm], onDelete: NoAction, onUpdate: NoAction, map: "fk_professores_administradores1")
   turmas                Turma[]
 

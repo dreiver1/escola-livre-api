@@ -36,7 +36,7 @@ exports.createMes = async (req, res) => {
     try {
         const { nome, frequenciaId } = req.body;
         const mes = await prisma.mes.create({
-            data: { nome, frequenciaId}
+            data: { nome, frequenciaId }
         })
         return res.status(200).json(mes);
     } catch (error) {
