@@ -28,7 +28,7 @@ exports.GetAllAdmin = async (req, res) => {
         const result = await prisma.administradores.findMany();
         return res.json(result);
     } catch (error) {
-        return res.json(error);
+        return res.json("ocorreu um erro: " + error);
     }
 }
 

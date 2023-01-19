@@ -3,18 +3,19 @@ const prisma = new PrismaClient();
 
 exports.createAluno = async (req, res) => {
     try {
-        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores, turmaId, turma_id } = req.body;
-        const aluno = await prisma.alunos.create({
+        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores, turma } = req.body;
+        const aluno = await prisma.aluno.create({
             data: {
                 nome,
                 celular,
                 dataNascimento,
-                email, 
-                senha, 
+                email,
+                senha,
                 cpf,
                 professores_idprofessores,
-                turmaId,
-                turma_id
+                Turmas: {
+                    create: turma,
+                }
             }
         })
         return res.status(200).send(aluno)
@@ -25,18 +26,18 @@ exports.createAluno = async (req, res) => {
 
 exports.GetAllAluno = async (req, res) => {
     try {
-        const alunos = await prisma.alunos.findMany();
+        const alunos = await prisma.aluno.findMany();
         return res.json(alunos);
     } catch (error) {
         return res.json(error);
     }
 }
 
-exports.GetAlunoById = async (req, res) =>{
+exports.GetAlunoById = async (req, res) => {
     try {
         const { id } = req.params;
-        const aluno = await prisma.alunos.findUnique({where: { idAluno: id } })
-        if (!aluno){
+        const aluno = await prisma.aluno.findUnique({ where: { idAluno: id } })
+        if (!aluno) {
             return res.json({ error: "Não possivel encotrar esse usuario" });
         }
         return res.json(aluno);
@@ -45,49 +46,51 @@ exports.GetAlunoById = async (req, res) =>{
     }
 }
 
-exports.AlteraAluno = async (req, res) =>{
+exports.AlteraAluno = async (req, res) => {
     try {
         const { id } = req.params;
-        const {nome, email, cpf, dataNascimento, celular} = req.body;
-        let aluno = await prisma.alunos.findUnique({where: { idAluno: id } })
-        if (!aluno){
+        const { nome, email, cpf, dataNascimento, celular, turmaId } = req.body;
+        let aluno = await prisma.aluno.findUnique({ where: { idAluno: id } })
+        if (!aluno) {
             return res.json({ error: "Não possivel encotrar esse usuario" });
         }
-        aluno = await prisma.alunos.update({
+        aluno = await prisma.aluno.update({
             where: { idAluno: id },
-            data: { nome, email, celular, cpf, dataNascimento},
+            data: { nome, email, celular, cpf, dataNascimento, turmaId },
         });
 
-        return(res.json(aluno));
+        return (res.json(aluno));
 
     } catch (error) {
         return res.json("ocorreu um erro: " + error);
     }
 }
 
-exports.DelteAluno = async (req, res) =>{
+exports.DelteAluno = async (req, res) => {
     try {
-        const {id} = req.params;
-        let aluno = await prisma.alunos.findUnique({
-            where: {idAluno: id}
+        const { id } = req.params;
+        let aluno = await prisma.aluno.findUnique({
+            where: { idAluno: id }
         })
-        if(!aluno){
+        if (!aluno) {
             return res.json("Não foi possivel encontrar este usuario");
         }
-        aluno = await prisma.alunos.delete({
-            where: {idAluno: id,}
+        aluno = await prisma.aluno.delete({
+            where: { idAluno: id, }
         })
         return res.json(aluno);
     } catch (error) {
-        return res.json("ocorreu um erro: "+ error);
+        return res.json("ocorreu um erro: " + error);
     }
 }
 
 exports.getAlunosByTurma = async (req, res) => {
     try {
-        const {id} = req.params;
-        let alunos = await prisma.alunos.findMany({where: {turmaId: id}});
-        if (!alunos){
+        const { turmas } = req.body;
+        let alunos = await prisma.aluno.findMany({
+            where: {Turma: turmas}
+        });
+        if (!alunos) {
             return res.json({ error: "Não possivel encotrar esse usuario" });
         }
         return res.json(alunos);

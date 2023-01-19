@@ -8,23 +8,12 @@ datasource db {
 }
 
 model Turma {
-  id                       String           @id @default(cuid())
+  id                       String       @id @default(cuid())
   nome                     String
-  alunos                   AlunosEmTurmas[]
+  alunos                   Aluno[]
   frequencia               Frequencia[]
-  professores              professores?     @relation(fields: [professoresIdprofessores], references: [idprofessores])
+  professores              professores? @relation(fields: [professoresIdprofessores], references: [idprofessores])
   professoresIdprofessores String?
-}
-
-model AlunosEmTurmas {
-  aluno      Aluno    @relation(fields: [alunosId], references: [idAluno])
-  alunosId   String
-  turma      Turma    @relation(fields: [turmaId], references: [id])
-  turmaId    String
-  assignedAt DateTime @default(now())
-  assignedBy String
-
-  @@id([alunosId, turmaId])
 }
 
 model Frequencia {
@@ -45,50 +34,49 @@ model Aluno {
   senha                     String           @db.VarChar(45)
   cpf                       String?          @db.VarChar(45)
   professores_idprofessores String?
-  turma                     AlunosEmTurmas[]
   notas                     notas[]
   parecerDoAluno            parecerDoAluno[]
-
-  Frequencia Frequencia[]
+  Frequencia                Frequencia[]
+  Turma                     Turma?           @relation(fields: [turmaId], references: [id])
+  turmaId                   String?
 
   @@index([professores_idprofessores], map: "fk_alunos_professores_idx")
 }
 
 model Mes {
-  id   Int     @id @default(autoincrement())
-  nome String
-  a01  Boolean @default(false)
-  a02  Boolean @default(false)
-  a03  Boolean @default(false)
-  a04  Boolean @default(false)
-  a05  Boolean @default(false)
-  a06  Boolean @default(false)
-  a07  Boolean @default(false)
-  a08  Boolean @default(false)
-  a09  Boolean @default(false)
-  a10  Boolean @default(false)
-  a11  Boolean @default(false)
-  a12  Boolean @default(false)
-  a13  Boolean @default(false)
-  a14  Boolean @default(false)
-  a15  Boolean @default(false)
-  a16  Boolean @default(false)
-  a17  Boolean @default(false)
-  a18  Boolean @default(false)
-  a19  Boolean @default(false)
-  a20  Boolean @default(false)
-  a21  Boolean @default(false)
-  a22  Boolean @default(false)
-  a23  Boolean @default(false)
-  a24  Boolean @default(false)
-  a25  Boolean @default(false)
-  a26  Boolean @default(false)
-  a27  Boolean @default(false)
-  a28  Boolean @default(false)
-  a29  Boolean @default(false)
-  a30  Boolean @default(false)
-  a31  Boolean @default(false)
-
+  id           Int         @id @default(autoincrement())
+  nome         String
+  a01          Boolean     @default(false)
+  a02          Boolean     @default(false)
+  a03          Boolean     @default(false)
+  a04          Boolean     @default(false)
+  a05          Boolean     @default(false)
+  a06          Boolean     @default(false)
+  a07          Boolean     @default(false)
+  a08          Boolean     @default(false)
+  a09          Boolean     @default(false)
+  a10          Boolean     @default(false)
+  a11          Boolean     @default(false)
+  a12          Boolean     @default(false)
+  a13          Boolean     @default(false)
+  a14          Boolean     @default(false)
+  a15          Boolean     @default(false)
+  a16          Boolean     @default(false)
+  a17          Boolean     @default(false)
+  a18          Boolean     @default(false)
+  a19          Boolean     @default(false)
+  a20          Boolean     @default(false)
+  a21          Boolean     @default(false)
+  a22          Boolean     @default(false)
+  a23          Boolean     @default(false)
+  a24          Boolean     @default(false)
+  a25          Boolean     @default(false)
+  a26          Boolean     @default(false)
+  a27          Boolean     @default(false)
+  a28          Boolean     @default(false)
+  a29          Boolean     @default(false)
+  a30          Boolean     @default(false)
+  a31          Boolean     @default(false)
   Frequencia   Frequencia? @relation(fields: [frequenciaId], references: [id])
   frequenciaId String?
 }
@@ -107,12 +95,11 @@ model administradores {
 }
 
 model notas {
-  idnotas Int    @id @default(autoincrement())
-  nota01  Float?
-  nota02  Float?
-  nota03  Float?
-  nota04  Float?
-
+  idnotas       Int     @id @default(autoincrement())
+  nota01        Float?
+  nota02        Float?
+  nota03        Float?
+  nota04        Float?
   alunos        Aluno?  @relation(fields: [alunosIdAluno], references: [idAluno])
   alunosIdAluno String?
 }
