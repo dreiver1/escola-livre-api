@@ -7,7 +7,6 @@ router.get("/:id", administradoresControlers.GetAdminById);
 router.post("/", administradoresControlers.CreateAdmin);
 router.put("/:id", administradoresControlers.AlteraAdmin);
 router.delete("/:id", administradoresControlers.DelteAdm);
-
-
+router.post('/login', administradoresControlers.conectAdmin);
 
 module.exports = router;

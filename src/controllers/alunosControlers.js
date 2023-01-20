@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 exports.createAluno = async (req, res) => {
     try {
-        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores, turma } = req.body;
+        const { nome, dataNascimento, email, cpf, celular, senha, professores_idprofessores, turmaId } = req.body;
         const aluno = await prisma.aluno.create({
             data: {
                 nome,
@@ -13,9 +13,7 @@ exports.createAluno = async (req, res) => {
                 senha,
                 cpf,
                 professores_idprofessores,
-                Turmas: {
-                    create: turma,
-                }
+                turmaId
             }
         })
         return res.status(200).send(aluno)
@@ -86,9 +84,9 @@ exports.DelteAluno = async (req, res) => {
 
 exports.getAlunosByTurma = async (req, res) => {
     try {
-        const { turmas } = req.body;
+        const { id } = req.params;
         let alunos = await prisma.aluno.findMany({
-            where: {Turma: turmas}
+            where: {turmaId: id}
         });
         if (!alunos) {
             return res.json({ error: "Não possivel encotrar esse usuario" });
