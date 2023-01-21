@@ -5,7 +5,7 @@ exports.authValidation = async (req, res) => {
     const { token } = req.body;
     await jwt.verify(token, process.env.JWT_KEY, (error, decode) => {
       if (error) {
-        return res.status(401).json({ message: "Token invalido" })
+        return res.status(401).json({ message: "Token invalido: " + token})
       }
       return res.json(decode)
     });

@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const controlers = require('../controllers/alunosControlers');
-router.post("/", controlers.createAluno);
-router.get("/", controlers.GetAllAluno);
-router.get("/:id", controlers.GetAlunoById);
-router.get("/turma/:id", controlers.getAlunosByTurma);
-router.put("/:id", controlers.AlteraAluno);
-router.delete("/:id", controlers.DelteAluno);
+const auth = require('../middlewares/authController');
+
+router.post("/", auth, controlers.createAluno);
+router.get("/", auth, controlers.GetAllAluno);
+router.get("/:id", auth, controlers.GetAlunoById);
+router.get("/turma/:id", auth, controlers.getAlunosByTurma);
+router.put("/:id", auth, controlers.AlteraAluno);
+router.delete("/:id", auth, controlers.DelteAluno);
 module.exports = router;

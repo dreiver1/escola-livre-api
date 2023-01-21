@@ -1,11 +1,13 @@
 const express = require("express");
 const controller = require('../../controllers/alunosDependencies/avaliacao/notasController')
 const router = express.Router();
+const auth = require('../middlewares/authController');
 
-router.get("/", controller.getAllnota);
-router.get("/:id", controller.getNotaByID);
-router.post("/", controller.cretaNota);
-router.put("/:id", controller.putNotaByID);
-router.delete("/:id", controller.deleteNota);
+
+router.get("/", auth, controller.getAllnota);
+router.get("/:id", auth, controller.getNotaByID);
+router.post("/", auth, controller.cretaNota);
+router.put("/:id", auth, controller.putNotaByID);
+router.delete("/:id", auth, controller.deleteNota);
 
 module.exports = router;

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controlers = require('../controllers/professoresControlers');
-router.post("/", controlers.CreateProf);
-router.get("/", controlers.GetAllProf);
-router.get("/:id", controlers.GetProfById);
-router.put("/:id", controlers.AlteraProf);
-router.delete("/:id", controlers.DelteProf);
+const auth = require('../middlewares/authController');
+router.post("/", auth, controlers.CreateProf);
+router.get("/", auth, controlers.GetAllProf);
+router.get("/:id", auth, controlers.GetProfById);
+router.put("/:id", auth, controlers.AlteraProf);
+router.delete("/:id", auth, controlers.DelteProf);
 module.exports = router;
