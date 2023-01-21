@@ -10,6 +10,7 @@ const professores = require('./routes/professores');
 const frequencia = require('./routes/alunosDependencies/frequencia');
 const mes = require('./routes/alunosDependencies/mes');
 const notas = require('./routes/alunosDependencies/notas');
+const services = require('./routes/services')
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/turmas", turmas);
 app.use("/frequencia", frequencia);
 app.use("/mes", mes)
 app.use("/notas", notas)
+app.use('/services', services)
 
 
 module.exports = app;
