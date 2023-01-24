@@ -22,11 +22,11 @@ exports.getAllFrequencia = async (req, res)=>{
     }
 }
 
-exports.getAllFrequenciaByturmaId = async (req, res)=>{
+exports.getAllFrequenciaByAluno = async (req, res)=>{
     try {
         const { id } = req.params;
-        const frequencia = await prisma.frequencia.findMany({
-            where: { turmaId: id }
+        const frequencia = await prisma.frequencia.findFirst({
+            where: {alunosIdAluno: id}
         });
         return res.status(200).json(frequencia);
     } catch (error) {

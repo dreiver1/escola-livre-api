@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controllerMes = require("../../controllers/alunosDependencies/frequencia/mesController");
-const auth = require('../middlewares/authController');
+const auth = require('../../middlewares/authController');
 
 router.get("/", auth, controllerMes.getAllMes);
 router.get("/:id", auth, controllerMes.getMesById);

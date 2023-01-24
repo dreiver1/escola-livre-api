@@ -1,7 +1,7 @@
 const express = require("express");
 const controller = require('../../controllers/alunosDependencies/avaliacao/notasController')
 const router = express.Router();
-const auth = require('../middlewares/authController');
+const auth = require('../../middlewares/authController');
 
 
 router.get("/", auth, controller.getAllnota);
