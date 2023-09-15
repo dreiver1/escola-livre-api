@@ -1,7 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
 exports.CreateProf = async (req, res) => {
     try {
         const {nome, celular, email, cpf, dataNascimento, senha, administradores_idAdm, id} = req.body;
