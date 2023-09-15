@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./db');
 
 const turmas = require('./routes/turmas');
 const administradores = require('./routes/administradores');
@@ -14,6 +15,7 @@ const services = require('./routes/services')
 
 const app = express();
 
+db.openDb();
 
 app.use(cors());
 app.use(morgan('dev'));
